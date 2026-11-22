@@ -1,0 +1,45 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function myProfile() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function adminOrCoLeader() {
+      return signedIn() && myProfile().role in ['admin', 'coleader'];
+    }
+
+    function leaderFor(teamId) {
+      return signedIn()
+        && myProfile().role == 'leader'
+        && myProfile().teamId == teamId;
+    }
+
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || adminOrCoLeader());
+      allow write: if false;
+    }
+
+    match /teams/{teamId} {
+      allow read: if signedIn();
+      allow create, update: if adminOrCoLeader() || leaderFor(teamId);
+      allow delete: if adminOrCoLeader();
+    }
+
+    match /reports/{reportId} {
+      // Only Admin and Co-leaders can read submitted reports.
+      allow read: if adminOrCoLeader();
+
+      // A leader can submit only for their own assigned team.
+      allow create: if adminOrCoLeader()
+        || (leaderFor(request.resource.data.teamId));
+
+      // Leaders cannot edit or delete a submitted report.
+      allow update, delete: if adminOrCoLeader();
+    }
+  }
+}
