@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -31,7 +32,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .stat{background:#0b1021;border:1px solid var(--line);padding:13px;border-radius:12px}
 .stat b{display:block;color:var(--gold);font-size:24px}
 .tablewrap{overflow:auto}
-table{width:100%;border-collapse:collapse;min-width:620px}
+table{width:100%;border-collapse:collapse;min-width:760px}
 td,th{text-align:left;padding:8px;border-bottom:1px solid var(--line)}
 th{color:var(--gold);font-size:12px}
 td input{min-width:65px;padding:7px}
@@ -128,16 +129,14 @@ td input{min-width:65px;padding:7px}
 <th>SR flags</th>
 <th>ABR wins</th>
 <th>Race wins</th>
+<th>Boosted To</th>
 </tr>
 </thead>
 <tbody id="rows"></tbody>
 </table>
 </div>
 
-<label>Boosted To (in-game player names)</label>
-<textarea id="boostedTo" rows="2" placeholder="Enter the in-game names you boosted, separated by commas. Example: Puma, Phoenix"></textarea>
-
-<p class="small">Enter the game names of the players boosted, not your team members' real names.</p>
+<p class="small">Enter the in-game names of the players boosted in each player's own row. Example: Puma, Phoenix.</p>
 
 <label>Notes</label>
 <textarea id="notes" rows="2" placeholder="Optional notes"></textarea>
@@ -369,6 +368,10 @@ ${["boosts","squadRushFlags","abrWins","allianceRaceWins"].map(k=>`
 <input type="number" min="0" step="1" value="0" data-i="${i}" data-k="${k}">
 </td>
 `).join("")}
+
+<td>
+<input type="text" placeholder="Puma, Phoenix" data-i="${i}" data-k="boostedTo">
+</td>
 
 </tr>
 
@@ -642,15 +645,20 @@ const players=[...$("rows").querySelectorAll("tr")].map((tr,i)=>{
 let x={name:t.players[i]};
 
 tr.querySelectorAll("input").forEach(a=>{
+
+if(a.dataset.k==="boostedTo"){
+x.boostedTo=a.value.trim();
+}
+else{
 x[a.dataset.k]=Math.max(0,Math.floor(+a.value||0));
+}
+
 });
 
 return x;
 
 });
 
-
-const boostedTo=$("boostedTo").value.trim();
 
 $("save").disabled=true;
 $("saveMsg").textContent="Submitting...";
@@ -668,9 +676,6 @@ date,
 period,
 players,
 
-// NEW FIELD: IN-GAME PLAYER NAMES BOOSTED
-boostedTo:boostedTo,
-
 notes:$("notes").value,
 submittedBy:user.uid,
 updatedAt:new Date().toISOString()
@@ -683,7 +688,6 @@ $("saveMsg").textContent=
 $("saveMsg").className="success";
 
 $("notes").value="";
-$("boostedTo").value="";
 
 renderReportRows();
 
@@ -739,15 +743,11 @@ ${esc(p.name)}:
 boosts ${Number(p.boosts)||0},
 SR ${Number(p.squadRushFlags)||0},
 ABR ${Number(p.abrWins)||0},
-race ${Number(p.allianceRaceWins)||0}
+race ${Number(p.allianceRaceWins)||0},
+<b>Boosted To:</b> ${esc(p.boostedTo||"—")}
 
 `).join("<br>")}
 
-</p>
-
-<p>
-<b>Boosted To:</b>
-${esc(r.boostedTo||"—")}
 </p>
 
 ${esc(r.notes||"")}
