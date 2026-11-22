@@ -612,4 +612,32 @@ onAuthStateChanged(auth,async u=>{
     $("app").classList.remove("hidden");
 
     $("welcome").textContent=profile.displayName||u.email;
-    $("roleTag").textContent=profi
+    $("roleTag").textContent=String(profile.role).toUpperCase();
+
+await ensureInitialTeams();
+await loadTeams();
+
+if(canViewAll()){
+  await loadReports();
+}else{
+  $("historyTab").classList.add("hidden");
+  $("overviewTab").classList.add("hidden");
+  $("historyPanel").classList.add("hidden");
+  $("overviewPanel").classList.add("hidden");
+}
+
+if(isVisitor()){
+  $("submitTab").classList.add("hidden");
+  $("submitPanel").classList.add("hidden");
+}
+
+}catch(e){
+  $("app").classList.add("hidden");
+  $("login").classList.remove("hidden");
+  $("loginMsg").textContent="Portal error: "+e.message;
+}
+});
+
+</script>
+</body>
+</html>
