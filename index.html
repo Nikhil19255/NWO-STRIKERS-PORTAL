@@ -1,26 +1,72 @@
+
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>NWO STRIKERS Portal</title>
+
 <style>
-:root{--bg:#090a16;--panel:#14182b;--line:#303657;--gold:#f6ce55;--purple:#9b70ff;--muted:#aeb5d4}
+:root{
+--bg:#090a16;
+--panel:#14182b;
+--line:#303657;
+--gold:#f6ce55;
+--purple:#9b70ff;
+--muted:#aeb5d4
+}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(circle at 10% 0,#27154a,transparent 35%),#090a16;color:#f5f6ff;font:15px system-ui}
-header{padding:20px 5%;background:#090b18ee;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+body{
+margin:0;
+background:radial-gradient(circle at 10% 0,#27154a,transparent 35%),#090a16;
+color:#f5f6ff;
+font:15px system-ui
+}
+header{
+padding:20px 5%;
+background:#090b18ee;
+border-bottom:1px solid var(--line);
+position:sticky;
+top:0;
+z-index:5
+}
 h1{margin:0;letter-spacing:3px}
 header small,.muted{color:var(--muted)}
 main{max-width:1100px;margin:25px auto;padding:0 16px 50px}
-.card,.team{background:linear-gradient(145deg,#171c34,#101426);border:1px solid var(--line);border-radius:16px;padding:18px;margin:14px 0}
-.teams{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.card,.team{
+background:linear-gradient(145deg,#171c34,#101426);
+border:1px solid var(--line);
+border-radius:16px;
+padding:18px;
+margin:14px 0
+}
+.teams{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:12px
+}
 .team{margin:0}
 .team h3{margin:0 0 5px;color:var(--gold)}
 .leader{color:#d7c18a;font-size:13px}
 .team li{margin:4px 0}
 label{display:block;margin:12px 0 5px;color:#cbd1ed;font-size:13px}
-input,select,textarea{background:#090d1c;color:white;border:1px solid #394166;border-radius:9px;padding:11px;width:100%}
-button{background:linear-gradient(100deg,#7c3aed,#2563eb);border:0;border-radius:9px;color:white;padding:11px 15px;font-weight:bold;cursor:pointer}
+input,select,textarea{
+background:#090d1c;
+color:white;
+border:1px solid #394166;
+border-radius:9px;
+padding:11px;
+width:100%
+}
+button{
+background:linear-gradient(100deg,#7c3aed,#2563eb);
+border:0;
+border-radius:9px;
+color:white;
+padding:11px 15px;
+font-weight:bold;
+cursor:pointer
+}
 button:disabled{opacity:.5;cursor:not-allowed}
 .secondary{background:#272e4c}
 .danger{background:#8b263b}
@@ -28,7 +74,12 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .row>*{flex:1}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.stat{background:#0b1021;border:1px solid var(--line);padding:13px;border-radius:12px}
+.stat{
+background:#0b1021;
+border:1px solid var(--line);
+padding:13px;
+border-radius:12px
+}
 .stat b{display:block;color:var(--gold);font-size:24px}
 .tablewrap{overflow:auto}
 table{width:100%;border-collapse:collapse;min-width:760px}
@@ -38,7 +89,13 @@ td input{min-width:65px;padding:7px}
 .tabs{display:flex;gap:8px;margin:16px 0;flex-wrap:wrap}
 .tabs button{background:#242a46}
 .tabs button.active{background:#713de0}
-.notice{color:#ffe3a0;background:#342b17;padding:12px;border-radius:10px;font-size:13px}
+.notice{
+color:#ffe3a0;
+background:#342b17;
+padding:12px;
+border-radius:10px;
+font-size:13px
+}
 .error{color:#ff9eae}
 .success{color:#77e4b2}
 .team-actions{display:flex;gap:8px;margin-top:12px}
@@ -47,9 +104,12 @@ td input{min-width:65px;padding:7px}
 .editor-player{display:flex;gap:8px;align-items:center;margin:8px 0}
 .editor-player input{flex:1}
 .editor-player button{flex:0 0 auto}
-@media(max-width:650px){.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){
+.stats{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 </head>
+
 <body>
 
 <header>
@@ -64,15 +124,18 @@ td input{min-width:65px;padding:7px}
 <p class="notice">Firebase is not configured. Check the firebaseConfig section in index.html.</p>
 </section>
 
-<section id="login" class="card hidden">
+<!-- Login is visible initially -->
+<section id="login" class="card">
 <h2>Portal login</h2>
 <form id="loginForm">
 <label>Email</label>
 <input id="email" type="email" required autocomplete="username">
+
 <label>Password</label>
 <input id="password" type="password" required autocomplete="current-password">
+
 <p id="loginMsg" class="error"></p>
-<button>Sign in</button>
+<button id="loginButton">Sign in</button>
 </form>
 </section>
 
@@ -101,11 +164,13 @@ td input{min-width:65px;padding:7px}
 
 <section id="submitPanel" class="card">
 <h3 id="formTitle">Daily report</h3>
+
 <div class="row">
 <div id="teamSelectWrap">
 <label>Group</label>
 <select id="reportTeam"></select>
 </div>
+
 <div>
 <label>Period</label>
 <select id="period">
@@ -113,6 +178,7 @@ td input{min-width:65px;padding:7px}
 <option value="weekly">Weekly</option>
 </select>
 </div>
+
 <div>
 <label>Date</label>
 <input type="date" id="date">
@@ -136,13 +202,16 @@ td input{min-width:65px;padding:7px}
 </div>
 
 <p class="small">Enter the in-game names boosted in each player's row. Example: Puma, Phoenix.</p>
+
 <label>Notes</label>
 <textarea id="notes" rows="2" placeholder="Optional notes"></textarea>
+
 <div class="row">
 <p id="saveMsg" class="muted"></p>
 <button id="save">Submit report</button>
 </div>
-<p class="small">Group leaders cannot view submitted reports. Admin and co-leaders can view all reports.</p>
+
+<p class="small">Group leaders cannot view submitted reports. Admin and Co-Leaders can view all reports.</p>
 </section>
 
 <section id="historyPanel" class="card hidden">
@@ -165,10 +234,12 @@ td input{min-width:65px;padding:7px}
 </section>
 
 <p class="muted" style="text-align:center">Private portal · Authorised accounts only</p>
+
 </main>
 
 <div id="editModal" class="hidden" style="position:fixed;inset:0;background:#000b;z-index:10;overflow:auto;padding:18px">
 <div class="card" style="max-width:650px;margin:30px auto">
+
 <div class="row">
 <h2>Edit group</h2>
 <button class="secondary" id="closeEditor" style="flex:0 0 auto">Close</button>
@@ -190,454 +261,671 @@ td input{min-width:65px;padding:7px}
 
 <p id="editMsg" class="muted"></p>
 <button id="saveTeam">Save group changes</button>
+
 </div>
 </div>
 
 <script type="module">
+
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 
 import {
-getAuth,signInWithEmailAndPassword,onAuthStateChanged,signOut
+getAuth,
+signInWithEmailAndPassword,
+onAuthStateChanged,
+signOut
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 import {
-getFirestore,doc,getDoc,setDoc,collection,getDocs
+getFirestore,
+doc,
+getDoc,
+setDoc,
+collection,
+getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA6H_1ApkBWTJbsk8RNPsuspBkbnXUmsVA",
-  authDomain: "nwo-strikers.firebaseapp.com",
-  projectId: "nwo-strikers",
-  storageBucket: "nwo-strikers.firebasestorage.app",
-  messagingSenderId: "21796266812",
-  appId: "1:21796266812:web:fcff868399321b0ff8b439",
-  measurementId: "G-YMTNJNJYNX"
+apiKey: "AIzaSyA6H_1ApkBWTJbsk8RNPsuspBkbnXUmsVA",
+authDomain: "nwo-strikers.firebaseapp.com",
+projectId: "nwo-strikers",
+storageBucket: "nwo-strikers.firebasestorage.app",
+messagingSenderId: "21796266812",
+appId: "1:21796266812:web:fcff868399321b0ff8b439",
+measurementId: "G-YMTNJNJYNX"
 };
 
 const MAX_MEMBERS = 30;
 
 const defaults = [
-{id:"warbringers",name:"WARBRINGERS",leader:"Saiyans",players:["Saiyans","OnePiece","Supreme","CyberNinja","Supremacy 11"],color:"#38d9ff"},
-{id:"howlers",name:"HOWLERS",leader:"Sadvik (Glory Fighters)",players:["Glory Fighters","IND ELITES","Prithish","pSycho","United Christ Warriors"],color:"#ff647c"},
-{id:"destroyers",name:"DESTROYERS",leader:"Rashmi (RRS)",players:["RRS","MSD_7_CSK","Navas","Sikandar","Hyderabad"],color:"#b78cff"},
-{id:"protectors",name:"PROTECTORS",leader:"Ajay",players:["Ajay","Roman Empire","MAHAKAAL","Dhambhai","Champions"],color:"#4de0a3"},
-{id:"creators",name:"CREATORS",leader:"Naqab",players:["Naqab","Root","Rajagm Arejo","PRJ06","Smashers"],color:"#f6c945"},
-{id:"bullseye",name:"BULLSEYE",leader:"Beast",players:["Beast","Rahul Gaming","Team Avi","United Warriors"],color:"#22d3ee"}
+{
+id:"warbringers",
+name:"WARBRINGERS",
+leader:"Saiyans",
+players:["Saiyans","OnePiece","Supreme","CyberNinja","Supremacy 11"],
+color:"#38d9ff"
+},
+{
+id:"howlers",
+name:"HOWLERS",
+leader:"Sadvik (Glory Fighters)",
+players:["Glory Fighters","IND ELITES","Prithish","pSycho","United Christ Warriors"],
+color:"#ff647c"
+},
+{
+id:"destroyers",
+name:"DESTROYERS",
+leader:"Rashmi (RRS)",
+players:["RRS","MSD_7_CSK","Navas","Sikandar","Hyderabad"],
+color:"#b78cff"
+},
+{
+id:"protectors",
+name:"PROTECTORS",
+leader:"Ajay",
+players:["Ajay","Roman Empire","MAHAKAAL","Dhambhai","Champions"],
+color:"#4de0a3"
+},
+{
+id:"creators",
+name:"CREATORS",
+leader:"Naqab",
+players:["Naqab","Root","Rajagm Arejo","PRJ06","Smashers"],
+color:"#f6c945"
+},
+{
+id:"bullseye",
+name:"BULLSEYE",
+leader:"Beast",
+players:["Beast","Rahul Gaming","Team Avi","United Warriors"],
+color:"#22d3ee"
+}
 ];
 
 const $ = id => document.getElementById(id);
 
-const esc = s => String(s??"").replace(/[&<>"']/g,c=>({
-"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+const esc = s => String(s ?? "").replace(/[&<>"']/g,c=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
 }[c]));
 
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-let user=null;
-let profile=null;
-let teams=defaults.map(t=>({...t,players:[...t.players]}));
-let reports=[];
-let editingId=null;
-let editingDraft=null;
+let user = null;
+let profile = null;
+let teams = defaults.map(t=>({...t,players:[...t.players]}));
+let reports = [];
+let editingId = null;
+let editingDraft = null;
 
-const adminLike=()=>profile && ["admin","coleader"].includes(profile.role);
-const isVisitor=()=>profile?.role==="visitor";
-const canViewAll=()=>adminLike() || isVisitor();
-const canManageRoster=()=>adminLike();
-const myTeam=()=>teams.find(t=>t.id===profile?.teamId);
-const totalMembers=()=>teams.reduce((n,t)=>n+(Array.isArray(t.players)?t.players.length:0),0);
+const adminLike = () => profile && ["admin","coleader"].includes(profile.role);
+const isVisitor = () => profile?.role === "visitor";
+const canViewAll = () => adminLike() || isVisitor();
+const canManageRoster = () => adminLike();
 
-const today=new Date();
-$("date").value=new Date(today.getTime()-today.getTimezoneOffset()*60000).toISOString().slice(0,10);
+const myTeam = () => teams.find(t=>t.id===profile?.teamId);
+
+const totalMembers = () =>
+teams.reduce((n,t)=>n+(Array.isArray(t.players)?t.players.length:0),0);
+
+const today = new Date();
+$("date").value = new Date(
+today.getTime()-today.getTimezoneOffset()*60000
+).toISOString().slice(0,10);
 
 function renderRoster(){
-  $("teams").innerHTML=teams.map(t=>`
-    <article class="team">
-      <h3>${esc(t.name)}</h3>
-      <div class="leader">Leader: ${esc(t.leader)}</div>
-      <ol>${t.players.map(p=>`<li>${esc(p)}</li>`).join("")}</ol>
-      ${user && (adminLike() || (profile.role==="leader" && profile.teamId===t.id))
-        ? `<div class="team-actions"><button data-edit="${t.id}">Edit group</button></div>` : ""}
-    </article>
-  `).join("");
 
-  $("groupCount").textContent=canViewAll()?teams.length:"1";
+$("teams").innerHTML = teams.map(t=>`
+<article class="team">
+<h3>${esc(t.name)}</h3>
+<div class="leader">Leader: ${esc(t.leader)}</div>
+<ol>${t.players.map(p=>`<li>${esc(p)}</li>`).join("")}</ol>
 
-  if(canViewAll()){
-    const count=totalMembers();
-    $("playerCount").textContent=`${count} / ${MAX_MEMBERS}`;
-    $("capacityNotice").classList.remove("hidden");
-    $("capacityNotice").textContent=count>=MAX_MEMBERS
-      ? `Alliance capacity reached: ${count} / ${MAX_MEMBERS} members. Remove a member before adding another.`
-      : `${count} / ${MAX_MEMBERS} members · ${MAX_MEMBERS-count} available slot(s).`;
-  }else{
-    $("playerCount").textContent=teams.reduce((n,t)=>n+t.players.length,0);
-    $("capacityNotice").classList.add("hidden");
-  }
+${user && (adminLike() || (profile.role==="leader" && profile.teamId===t.id))
+? `<div class="team-actions"><button data-edit="${t.id}">Edit group</button></div>`
+: ""}
 
-  document.querySelectorAll("[data-edit]").forEach(b=>{
-    b.onclick=()=>openEditor(b.dataset.edit);
-  });
+</article>
+`).join("");
+
+$("groupCount").textContent = canViewAll() ? teams.length : "1";
+
+if(canViewAll()){
+
+const count = totalMembers();
+
+$("playerCount").textContent = `${count} / ${MAX_MEMBERS}`;
+$("capacityNotice").classList.remove("hidden");
+
+$("capacityNotice").textContent = count >= MAX_MEMBERS
+? `Alliance capacity reached: ${count} / ${MAX_MEMBERS} members. Remove a member before adding another.`
+: `${count} / ${MAX_MEMBERS} members · ${MAX_MEMBERS-count} available slot(s).`;
+
+}else{
+
+$("playerCount").textContent =
+teams.reduce((n,t)=>n+t.players.length,0);
+
+$("capacityNotice").classList.add("hidden");
+}
+
+document.querySelectorAll("[data-edit]").forEach(b=>{
+b.onclick = ()=>openEditor(b.dataset.edit);
+});
+
 }
 
 function renderReportRows(){
-  const t=adminLike()?teams.find(x=>x.id===$("reportTeam").value):myTeam();
-  if(!t){$("rows").innerHTML="";return;}
 
-  $("rows").innerHTML=t.players.map((p,i)=>`
-    <tr>
-      <td>${esc(p)}</td>
-      ${["boosts","squadRushFlags","abrWins","allianceRaceWins"].map(k=>`
-        <td><input type="number" min="0" step="1" value="0" data-i="${i}" data-k="${k}"></td>
-      `).join("")}
-      <td><input type="text" placeholder="Puma, Phoenix" data-i="${i}" data-k="boostedTo"></td>
-    </tr>
-  `).join("");
+const t = adminLike()
+? teams.find(x=>x.id===$("reportTeam").value)
+: myTeam();
+
+if(!t){
+$("rows").innerHTML = "";
+return;
+}
+
+$("rows").innerHTML = t.players.map((p,i)=>`
+<tr>
+<td>${esc(p)}</td>
+
+${["boosts","squadRushFlags","abrWins","allianceRaceWins"].map(k=>`
+<td><input type="number" min="0" step="1" value="0" data-i="${i}" data-k="${k}"></td>
+`).join("")}
+
+<td><input type="text" placeholder="Puma, Phoenix" data-i="${i}" data-k="boostedTo"></td>
+</tr>
+`).join("");
+
 }
 
 function populateTeamSelect(){
-  $("reportTeam").innerHTML=teams.map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join("");
 
-  if(!adminLike()){
-    $("teamSelectWrap").classList.add("hidden");
-    if(myTeam())$("reportTeam").value=myTeam().id;
-  }else{
-    $("teamSelectWrap").classList.remove("hidden");
-  }
-  renderReportRows();
+$("reportTeam").innerHTML = teams.map(t=>
+`<option value="${t.id}">${esc(t.name)}</option>`
+).join("");
+
+if(!adminLike()){
+$("teamSelectWrap").classList.add("hidden");
+if(myTeam()) $("reportTeam").value = myTeam().id;
+}else{
+$("teamSelectWrap").classList.remove("hidden");
+}
+
+renderReportRows();
+
 }
 
 async function ensureInitialTeams(){
-  if(!adminLike())return;
 
-  for(const t of defaults){
-    const ref=doc(db,"teams",t.id);
-    const snap=await getDoc(ref);
-    if(!snap.exists()){
-      await setDoc(ref,{
-        name:t.name,leader:t.leader,players:t.players,
-        color:t.color,updatedAt:new Date().toISOString()
-      });
-    }
-  }
+if(!adminLike()) return;
+
+for(const t of defaults){
+
+const ref = doc(db,"teams",t.id);
+const snap = await getDoc(ref);
+
+if(!snap.exists()){
+await setDoc(ref,{
+name:t.name,
+leader:t.leader,
+players:t.players,
+color:t.color,
+updatedAt:new Date().toISOString()
+});
+}
+
+}
+
 }
 
 async function loadTeams(){
-  if(canViewAll()){
-    const snap=await getDocs(collection(db,"teams"));
-    const saved=new Map(snap.docs.map(d=>[d.id,{id:d.id,...d.data()}]));
 
-    teams=defaults.map(base=>{
-      const d=saved.get(base.id);
-      return d?{...base,...d,players:Array.isArray(d.players)?d.players:base.players}:base;
-    });
-  }else{
-    const teamId=profile.teamId;
-    const base=defaults.find(t=>t.id===teamId);
-    if(!base)throw Error("Your group assignment is invalid.");
+if(canViewAll()){
 
-    const snap=await getDoc(doc(db,"teams",teamId));
-    if(!snap.exists())throw Error("Your assigned group was not found.");
+const snap = await getDocs(collection(db,"teams"));
+const saved = new Map(
+snap.docs.map(d=>[d.id,{id:d.id,...d.data()}])
+);
 
-    teams=[{
-      ...base,...snap.data(),id:teamId,
-      players:Array.isArray(snap.data().players)?snap.data().players:base.players
-    }];
-  }
+teams = defaults.map(base=>{
+const d = saved.get(base.id);
 
-  renderRoster();
-  populateTeamSelect();
+return d
+? {...base,...d,players:Array.isArray(d.players)?d.players:base.players}
+: base;
+});
+
+}else{
+
+const teamId = profile.teamId;
+const base = defaults.find(t=>t.id===teamId);
+
+if(!base) throw Error("Your group assignment is invalid.");
+
+const snap = await getDoc(doc(db,"teams",teamId));
+
+if(!snap.exists()) throw Error("Your assigned group was not found.");
+
+teams = [{
+...base,
+...snap.data(),
+id:teamId,
+players:Array.isArray(snap.data().players)
+?snap.data().players
+:base.players
+}];
+
+}
+
+renderRoster();
+populateTeamSelect();
+
 }
 
 function openEditor(id){
-  const t=teams.find(x=>x.id===id);
-  if(!t)return;
-  if(!adminLike() && !(profile.role==="leader" && profile.teamId===id))return;
 
-  editingId=id;
-  editingDraft={name:t.name,leader:t.leader,players:[...t.players]};
+const t = teams.find(x=>x.id===id);
+if(!t) return;
 
-  $("editTeamName").value=editingDraft.name;
-  $("editLeaderName").value=editingDraft.leader;
+if(!adminLike() && !(profile.role==="leader" && profile.teamId===id))
+return;
 
-  const canChangeCount=canManageRoster();
-  $("addPlayerArea").classList.toggle("hidden",!canChangeCount);
+editingId = id;
 
-  $("editMsg").textContent=canChangeCount
-    ?"Admin/Co-Leader can manage group membership. Maximum alliance size: 30."
-    :"You can edit existing player names and group details. Only Admin/Co-Leader can add or remove members.";
+editingDraft = {
+name:t.name,
+leader:t.leader,
+players:[...t.players]
+};
 
-  renderPlayerEditor();
-  $("editModal").classList.remove("hidden");
+$("editTeamName").value = editingDraft.name;
+$("editLeaderName").value = editingDraft.leader;
+
+const canChangeCount = canManageRoster();
+
+$("addPlayerArea").classList.toggle("hidden",!canChangeCount);
+
+$("editMsg").textContent = canChangeCount
+? "Admin/Co-Leader can manage group membership. Maximum alliance size: 30."
+: "You can edit existing player names and group details. Only Admin/Co-Leader can add or remove members.";
+
+renderPlayerEditor();
+
+$("editModal").classList.remove("hidden");
+
 }
 
 function renderPlayerEditor(){
-  const canChangeCount=canManageRoster();
 
-  $("playerEditor").innerHTML=editingDraft.players.map((p,i)=>`
-    <div class="editor-player">
-      <input data-player-index="${i}" value="${esc(p)}">
-      ${canChangeCount?`<button type="button" class="danger" data-remove="${i}">Remove</button>`:""}
-    </div>
-  `).join("");
+const canChangeCount = canManageRoster();
 
-  document.querySelectorAll("[data-remove]").forEach(b=>{
-    b.onclick=()=>{
-      editingDraft.players.splice(Number(b.dataset.remove),1);
-      renderPlayerEditor();
-    };
-  });
+$("playerEditor").innerHTML = editingDraft.players.map((p,i)=>`
+<div class="editor-player">
+<input data-player-index="${i}" value="${esc(p)}">
+
+${canChangeCount
+? `<button type="button" class="danger" data-remove="${i}">Remove</button>`
+: ""}
+</div>
+`).join("");
+
+document.querySelectorAll("[data-remove]").forEach(b=>{
+b.onclick = ()=>{
+editingDraft.players.splice(Number(b.dataset.remove),1);
+renderPlayerEditor();
+};
+});
+
 }
 
-$("addPlayer").onclick=()=>{
-  if(!canManageRoster())return;
+$("addPlayer").onclick = ()=>{
 
-  const currentCount=totalMembers();
-  if(currentCount>=MAX_MEMBERS){
-    $("editMsg").textContent="Maximum reached: 30 / 30. Remove a member before adding another.";
-    return;
-  }
+if(!canManageRoster()) return;
 
-  const n=$("newPlayer").value.trim();
-  if(!n)return;
+const currentCount = totalMembers();
 
-  editingDraft.players.push(n);
-  $("newPlayer").value="";
-  renderPlayerEditor();
+if(currentCount + (editingDraft.players.length -
+teams.find(t=>t.id===editingId).players.length) >= MAX_MEMBERS){
 
-  $("editMsg").textContent=`After saving, the roster will contain ${currentCount+1} / ${MAX_MEMBERS} members.`;
+$("editMsg").textContent =
+"Maximum reached: 30 / 30. Remove a member before adding another.";
+
+return;
+}
+
+const n = $("newPlayer").value.trim();
+if(!n) return;
+
+editingDraft.players.push(n);
+$("newPlayer").value = "";
+
+renderPlayerEditor();
+
+$("editMsg").textContent =
+"New player added to the draft. Save the group to publish the change.";
+
 };
 
-$("closeEditor").onclick=()=>{$("editModal").classList.add("hidden");};
-
-$("saveTeam").onclick=async()=>{
-  if(!editingId || !editingDraft)return;
-
-  const current=teams.find(t=>t.id===editingId);
-  const isAdmin=canManageRoster();
-
-  if(!isAdmin && !(profile.role==="leader" && profile.teamId===editingId)){
-    $("editMsg").textContent="You cannot edit this group.";
-    return;
-  }
-
-  const players=[...$("playerEditor").querySelectorAll("[data-player-index]")]
-    .map(x=>x.value.trim());
-
-  const name=$("editTeamName").value.trim();
-  const leader=$("editLeaderName").value.trim();
-
-  if(!name || !leader || players.some(p=>!p) || players.length===0){
-    $("editMsg").textContent="Group name, leader and all player names are required.";
-    return;
-  }
-
-  if(!isAdmin && players.length!==current.players.length){
-    $("editMsg").textContent="Group leaders cannot add or remove members.";
-    return;
-  }
-
-  const oldCount=totalMembers();
-  const newCount=oldCount-current.players.length+players.length;
-
-  if(isAdmin && newCount>MAX_MEMBERS){
-    $("editMsg").textContent=`Cannot save. Maximum alliance size is ${MAX_MEMBERS}. Current count: ${oldCount}.`;
-    return;
-  }
-
-  $("saveTeam").disabled=true;
-  $("editMsg").textContent="Saving to shared database...";
-
-  try{
-    await setDoc(doc(db,"teams",editingId),{
-      name,leader,players,
-      color:current.color,
-      updatedAt:new Date().toISOString()
-    });
-
-    await loadTeams();
-    $("editMsg").textContent="Saved successfully.";
-
-    setTimeout(()=>$("editModal").classList.add("hidden"),700);
-  }catch(e){
-    $("editMsg").textContent="Could not save: "+e.message;
-  }finally{
-    $("saveTeam").disabled=false;
-  }
+$("closeEditor").onclick = ()=>{
+$("editModal").classList.add("hidden");
 };
 
-$("reportTeam").onchange=renderReportRows;
+$("saveTeam").onclick = async()=>{
 
-$("period").onchange=()=>{
-  $("formTitle").textContent=$("period").value==="daily"?"Daily report":"Weekly report";
+if(!editingId || !editingDraft) return;
+
+const current = teams.find(t=>t.id===editingId);
+const isAdmin = canManageRoster();
+
+if(!isAdmin && !(profile.role==="leader" && profile.teamId===editingId)){
+$("editMsg").textContent = "You cannot edit this group.";
+return;
+}
+
+const players = [
+...$("playerEditor").querySelectorAll("[data-player-index]")
+].map(x=>x.value.trim());
+
+const name = $("editTeamName").value.trim();
+const leader = $("editLeaderName").value.trim();
+
+if(!name || !leader || players.some(p=>!p) || players.length===0){
+$("editMsg").textContent = "Group name, leader and all player names are required.";
+return;
+}
+
+if(!isAdmin && players.length!==current.players.length){
+$("editMsg").textContent = "Group leaders cannot add or remove members.";
+return;
+}
+
+const oldCount = totalMembers();
+const newCount = oldCount-current.players.length+players.length;
+
+if(isAdmin && newCount>MAX_MEMBERS){
+$("editMsg").textContent =
+`Cannot save. Maximum alliance size is ${MAX_MEMBERS}. Current count: ${oldCount}.`;
+return;
+}
+
+$("saveTeam").disabled = true;
+$("editMsg").textContent = "Saving to shared database...";
+
+try{
+
+await setDoc(doc(db,"teams",editingId),{
+name,
+leader,
+players,
+color:current.color,
+updatedAt:new Date().toISOString()
+});
+
+await loadTeams();
+
+$("editMsg").textContent = "Saved successfully.";
+
+setTimeout(()=>{
+$("editModal").classList.add("hidden");
+},700);
+
+}catch(e){
+
+$("editMsg").textContent = "Could not save: "+e.message;
+
+}finally{
+
+$("saveTeam").disabled = false;
+
+}
+
 };
 
-$("loginForm").onsubmit=async e=>{
-  e.preventDefault();
-  $("loginMsg").textContent="";
-  try{
-    await signInWithEmailAndPassword(auth,$("email").value,$("password").value);
-  }catch(x){
-    $("loginMsg").textContent=x.message;
-  }
+$("reportTeam").onchange = renderReportRows;
+
+$("period").onchange = ()=>{
+$("formTitle").textContent =
+$("period").value==="daily" ? "Daily report" : "Weekly report";
 };
 
-$("logout").onclick=()=>signOut(auth);
+$("loginForm").onsubmit = async e=>{
 
-$("save").onclick=async()=>{
-  if(isVisitor()){
-    $("saveMsg").textContent="Visitor accounts cannot submit reports.";
-    return;
-  }
+e.preventDefault();
 
-  const t=adminLike()?teams.find(x=>x.id===$("reportTeam").value):myTeam();
-  const date=$("date").value;
-  const period=$("period").value;
-  if(!t || !date)return;
+$("loginMsg").textContent = "";
+$("loginButton").disabled = true;
+$("loginButton").textContent = "Signing in...";
 
-  const players=[...$("rows").querySelectorAll("tr")].map((tr,i)=>{
-    let x={name:t.players[i]};
-    tr.querySelectorAll("input").forEach(a=>{
-      if(a.dataset.k==="boostedTo")x.boostedTo=a.value.trim();
-      else x[a.dataset.k]=Math.max(0,Math.floor(+a.value||0));
-    });
-    return x;
-  });
+try{
 
-  $("save").disabled=true;
-  $("saveMsg").textContent="Submitting...";
+await signInWithEmailAndPassword(
+auth,
+$("email").value.trim(),
+$("password").value
+);
 
-  try{
-    const id=`${period}_${t.id}_${date}`;
-    await setDoc(doc(db,"reports",id),{
-      teamId:t.id,teamName:t.name,leader:t.leader,
-      date,period,players,notes:$("notes").value,
-      submittedBy:user.uid,updatedAt:new Date().toISOString()
-    });
+}catch(x){
 
-    $("saveMsg").textContent="Report submitted successfully.";
-    $("saveMsg").className="success";
-    $("notes").value="";
-    renderReportRows();
-    if(canViewAll())await loadReports();
-  }catch(e){
-    $("saveMsg").textContent="Submission failed: "+e.message;
-    $("saveMsg").className="error";
-  }finally{
-    $("save").disabled=false;
-  }
+$("loginMsg").textContent = x.message;
+
+}finally{
+
+$("loginButton").disabled = false;
+$("loginButton").textContent = "Sign in";
+
+}
+
+};
+
+$("logout").onclick = ()=>signOut(auth);
+
+$("save").onclick = async()=>{
+
+if(isVisitor()){
+$("saveMsg").textContent = "Visitor accounts cannot submit reports.";
+return;
+}
+
+const t = adminLike()
+? teams.find(x=>x.id===$("reportTeam").value)
+: myTeam();
+
+const date = $("date").value;
+const period = $("period").value;
+
+if(!t || !date) return;
+
+const players = [...$("rows").querySelectorAll("tr")].map((tr,i)=>{
+
+let x = {name:t.players[i]};
+
+tr.querySelectorAll("input").forEach(a=>{
+
+if(a.dataset.k==="boostedTo"){
+x.boostedTo = a.value.trim();
+}else{
+x[a.dataset.k] = Math.max(0,Math.floor(+a.value||0));
+}
+
+});
+
+return x;
+
+});
+
+$("save").disabled = true;
+$("saveMsg").textContent = "Submitting...";
+
+try{
+
+const id = `${period}_${t.id}_${date}`;
+
+await setDoc(doc(db,"reports",id),{
+teamId:t.id,
+teamName:t.name,
+leader:t.leader,
+date,
+period,
+players,
+notes:$("notes").value,
+submittedBy:user.uid,
+updatedAt:new Date().toISOString()
+});
+
+$("saveMsg").textContent = "Report submitted successfully.";
+$("saveMsg").className = "success";
+$("notes").value = "";
+
+renderReportRows();
+
+if(canViewAll()) await loadReports();
+
+}catch(e){
+
+$("saveMsg").textContent = "Submission failed: "+e.message;
+$("saveMsg").className = "error";
+
+}finally{
+
+$("save").disabled = false;
+
+}
+
 };
 
 async function loadReports(){
-  if(!canViewAll())return;
 
-  const snap=await getDocs(collection(db,"reports"));
-  reports=snap.docs.map(d=>({id:d.id,...d.data()}))
-    .sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+if(!canViewAll()) return;
 
-  $("reportCount").textContent=reports.length;
+const snap = await getDocs(collection(db,"reports"));
 
-  $("history").innerHTML=reports.length?reports.map(r=>`
-    <div class="card">
-      <b>${esc(r.teamName)} · ${esc(String(r.period).toUpperCase())} · ${esc(r.date)}</b>
-      <p>${(r.players||[]).map(p=>`
-        ${esc(p.name)}: boosts ${Number(p.boosts)||0},
-        SR ${Number(p.squadRushFlags)||0},
-        ABR ${Number(p.abrWins)||0},
-        race ${Number(p.allianceRaceWins)||0},
-        <b>Boosted To:</b> ${esc(p.boostedTo||"—")}
-      `).join("<br>")}</p>
-      ${esc(r.notes||"")}
-    </div>
-  `).join(""):"<p class=muted>No reports yet.</p>";
+reports = snap.docs.map(d=>({id:d.id,...d.data()}))
+.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
 
-  $("overview").innerHTML=teams.map(t=>{
-    const sum={boosts:0,squadRushFlags:0,abrWins:0,allianceRaceWins:0};
+$("reportCount").textContent = reports.length;
 
-    reports.filter(r=>r.teamId===t.id && r.period==="daily")
-      .forEach(r=>(r.players||[]).forEach(p=>{
-        Object.keys(sum).forEach(k=>sum[k]+=Number(p[k])||0);
-      }));
+$("history").innerHTML = reports.length
+? reports.map(r=>`
+<div class="card">
+<b>${esc(r.teamName)} · ${esc(String(r.period).toUpperCase())} · ${esc(r.date)}</b>
 
-    return `
-      <div class="card">
-        <b>${esc(t.name)}</b> · ${esc(t.leader)}
-        <p>Members: ${t.players.length}</p>
-        <p>Boosts ${sum.boosts} · SR flags ${sum.squadRushFlags} · ABR wins ${sum.abrWins} · Race wins ${sum.allianceRaceWins}</p>
-      </div>
-    `;
-  }).join("");
+<p>${(r.players||[]).map(p=>`
+${esc(p.name)}: boosts ${Number(p.boosts)||0},
+SR ${Number(p.squadRushFlags)||0},
+ABR ${Number(p.abrWins)||0},
+race ${Number(p.allianceRaceWins)||0},
+<b>Boosted To:</b> ${esc(p.boostedTo||"—")}
+`).join("<br>")}</p>
+
+${esc(r.notes||"")}
+</div>
+`).join("")
+: "<p class='muted'>No reports yet.</p>";
+
+$("overview").innerHTML = teams.map(t=>{
+
+const sum = {
+boosts:0,
+squadRushFlags:0,
+abrWins:0,
+allianceRaceWins:0
+};
+
+reports.filter(r=>r.teamId===t.id && r.period==="daily")
+.forEach(r=>(r.players||[]).forEach(p=>{
+Object.keys(sum).forEach(k=>{
+sum[k] += Number(p[k])||0;
+});
+}));
+
+return `
+<div class="card">
+<b>${esc(t.name)}</b> · ${esc(t.leader)}
+<p>Members: ${t.players.length}</p>
+<p>
+Boosts ${sum.boosts} ·
+SR flags ${sum.squadRushFlags} ·
+ABR wins ${sum.abrWins} ·
+Race wins ${sum.allianceRaceWins}
+</p>
+</div>
+`;
+
+}).join("");
+
 }
 
 document.querySelectorAll(".tabs button").forEach(b=>{
-  b.onclick=()=>{
-    document.querySelectorAll(".tabs button").forEach(x=>x.classList.toggle("active",x===b));
-    ["submit","history","overview"].forEach(k=>{
-      $(k+"Panel").classList.toggle("hidden",b.dataset.tab!==k);
-    });
-  };
+
+b.onclick = ()=>{
+
+document.querySelectorAll(".tabs button")
+.forEach(x=>x.classList.toggle("active",x===b));
+
+["submit","history","overview"].forEach(k=>{
+$(k+"Panel").classList.toggle("hidden",b.dataset.tab!==k);
+});
+
+};
+
 });
 
 onAuthStateChanged(auth,async u=>{
-  user=u;
 
-  if(!u){
-    profile=null;
-    teams=defaults.map(t=>({...t,players:[...t.players]}));
-    $("app").classList.add("hidden");
-    $("login").classList.remove("hidden");
-    $("rosterHint").textContent="Sign in to view your authorised group access.";
-    $("teams").innerHTML="";
-    $("capacityNotice").classList.add("hidden");
-    return;
-  }
+user = u;
 
-  try{
-    const s=await getDoc(doc(db,"users",u.uid));
-    if(!s.exists())throw Error("No role profile found for this account.");
+if(!u){
 
-    profile=s.data();
+profile = null;
 
-    if(!["admin","coleader","leader","visitor"].includes(profile.role)){
-      throw Error("This account has no portal role.");
-    }
+teams = defaults.map(t=>({...t,players:[...t.players]}));
 
-    if(["leader"].includes(profile.role) && !defaults.some(t=>t.id===profile.teamId)){
-      throw Error("Your account has no valid group assignment.");
-    }
+$("app").classList.add("hidden");
+$("login").classList.remove("hidden");
 
-    $("login").classList.add("hidden");
-    $("app").classList.remove("hidden");
+$("rosterHint").textContent =
+"Sign in to view your authorised group access.";
 
-    $("welcome").textContent=profile.displayName||u.email;
-    $("roleTag").textContent=String(profile.role).toUpperCase();
+$("teams").innerHTML = "";
+$("capacityNotice").classList.add("hidden");
+
+return;
+
+}
+
+$("login").classList.add("hidden");
+$("loginMsg").textContent = "";
+
+try{
+
+const s = await getDoc(doc(db,"users",u.uid));
+
+if(!s.exists()){
+throw Error("No role profile found for this account.");
+}
+
+profile = s.data();
+
+if(!["admin","coleader","leader","visitor"].includes(profile.role)){
+throw Error("This account has no portal role.");
+}
+
+if(profile.role==="leader" &&
+!defaults.some(t=>t.id===profile.teamId)){
+throw Error("Your account has no valid group assignment.");
+}
+
+$("app").classList.remove("hidden");
+
+$("welcome").textContent = profile.displayName || u.email;
+$("roleTag").textContent = String(profile.role).toUpperCase();
 
 await ensureInitialTeams();
-await loadTeams();
-
-if(canViewAll()){
-  await loadReports();
-}else{
-  $("historyTab").classList.add("hidden");
-  $("overviewTab").classList.add("hidden");
-  $("historyPanel").classList.add("hidden");
-  $("overviewPanel").classList.add("hidden");
-}
-
-if(isVisitor()){
-  $("submitTab").classList.add("hidden");
-  $("submitPanel").classList.add("hidden");
-}
-
-}catch(e){
-  $("app").classList.add("hidden");
-  $("login").classList.remove("hidden");
-  $("loginMsg").textContent="Portal error: "+e.message;
-}
-});
-
-</script>
-</body>
-</html>
+await loadT
