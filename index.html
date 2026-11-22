@@ -928,4 +928,44 @@ $("welcome").textContent = profile.displayName || u.email;
 $("roleTag").textContent = String(profile.role).toUpperCase();
 
 await ensureInitialTeams();
-await loadT
+
+await loadTeams();
+
+if (canViewAll()) {
+  await loadReports();
+} else {
+  $("historyTab").classList.add("hidden");
+  $("overviewTab").classList.add("hidden");
+  $("historyPanel").classList.add("hidden");
+  $("overviewPanel").classList.add("hidden");
+}
+
+if (isVisitor()) {
+  $("submitTab").classList.add("hidden");
+  $("submitPanel").classList.add("hidden");
+  $("save").disabled = true;
+  $("tabs").querySelectorAll("button").forEach(b => {
+    b.classList.remove("active");
+  });
+  $("historyTab").classList.remove("hidden");
+  $("historyTab").classList.add("active");
+  $("historyPanel").classList.remove("hidden");
+}
+
+$("rosterHint").textContent =
+  "Signed in: " + (profile.displayName || u.email);
+
+} catch (e) {
+  profile = null;
+  $("app").classList.add("hidden");
+  $("login").classList.remove("hidden");
+  $("loginMsg").textContent = "Portal error: " + e.message;
+  await signOut(auth);
+}
+
+});
+
+</script>
+</body>
+</html>
+
